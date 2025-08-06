@@ -1,0 +1,6 @@
+fastapi
+pydantic
+python-jose[cryptography]
+passlib[bcrypt]
+langchain
+gemini-api-client  # Replace with actual Gemini client if available
