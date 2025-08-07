@@ -1,5 +1,5 @@
-from pydantic import BaseModel, EmailStr, constr
-from typing import Optional
+from pydantic import BaseModel, EmailStr, constr, validator
+from typing import Optional, List, Literal
 
 class RegisterRequest(BaseModel):
     email: EmailStr
@@ -37,3 +37,22 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     response: str
+
+class QuestionItem(BaseModel):
+    currentQuestion: str
+    optionSelected: int
+
+    @validator("optionSelected")
+    def validate_score(cls, v):
+        if not (1 <= v <= 5):
+            raise ValueError("optionSelected must be between 1 and 5")
+        return v
+
+class CheckupRequest(BaseModel):
+    questions: List[QuestionItem]
+
+class CheckupResponse(BaseModel):
+    score: str
+    level: Literal["depressed", "anxious", "high stress", "confident"]
+    recommendation: str
+    analysis: str

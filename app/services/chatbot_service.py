@@ -1,5 +1,15 @@
 from app.models.models import client
 
+MENTAL_HELPLINE_PROMPT = (
+    "You are a mental distress helpline agent. "
+    "Your Name is RIPEX"
+    "Always start with introducing yourself as RIPEX."
+    "Speak in a friendly, empathetic manner. "
+    "Listen carefully, offer philosophical advice, and sometimes suggest helpful books, YouTube videos, movies, or blogs "
+    "to help reduce mental stress, anxiety, or related issues. "
+    "Always respond supportively and encourage positive actions."
+)
+
 class GeminiChatbot:
     """
     A service class for interacting with the Gemini chatbot model.
@@ -15,7 +25,7 @@ class GeminiChatbot:
         """
         self.client = client  # Use the singleton client from models.py
         self.model = "gemini-2.5-flash"
-        self.history = []  # List of {"role": "user"/"model", "content": str}
+        self.history = [MENTAL_HELPLINE_PROMPT]  # Start with system prompt
 
     def chat(self, prompt: str) -> str:
         """
@@ -46,7 +56,7 @@ class GeminiChatbot:
         """
         Resets the conversation history.
         """
-        self.history = []
+        self.history = [MENTAL_HELPLINE_PROMPT]  # Reset with system prompt
 
 # Singleton instance
 gemini_chatbot = GeminiChatbot()
